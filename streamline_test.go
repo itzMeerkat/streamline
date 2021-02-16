@@ -28,18 +28,18 @@ type CommonInterface interface {
 	Retract() error
 }
 
-func Reset(ctx *StreamContext, data interface{}) error {
+func Reset(ctx *Context, data interface{}) error {
 	d := data.(CommonInterface)
 	return d.Retract()
 }
 
-func Inc(ctx *StreamContext, data interface{}) error {
+func Inc(ctx *Context, data interface{}) error {
 	d := data.(*MyData)
 	d.Counter += 1
 	return nil
 }
 
-func Mult(ctx *StreamContext, data interface{}) error {
+func Mult(ctx *Context, data interface{}) error {
 	d := data.(*MyData)
 	d.Counter *= 2
 	return nil
@@ -47,7 +47,7 @@ func Mult(ctx *StreamContext, data interface{}) error {
 
 func TestBasic(t *testing.T) {
 	l,_:=zap.NewProduction()
-	s := New(StreamContext{Logger: l.Sugar()})
+	s := New(Context{Logger: l.Sugar()})
 	//dm := MyData{Counter: 2}
 	wd := WrongData{Nocounter: 222}
 	//s.AddProc("1", Inc)

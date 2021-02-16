@@ -9,7 +9,7 @@ type Factory struct {
 	streamlines []*Streamline
 }
 
-func (f *Factory) New(meta StreamContext) *Streamline {
+func (f *Factory) New(meta Context) *Streamline {
 	sl := &Streamline{
 		procs: list.New(),
 		ctx:   meta,

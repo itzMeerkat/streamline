@@ -4,7 +4,7 @@ import (
 	"container/list"
 	"errors"
 )
-type ProcFunc func(ctx *StreamContext, data interface{}) error
+type ProcFunc func(ctx *Context, data interface{}) error
 
 type Proc struct {
 	F ProcFunc
@@ -14,7 +14,7 @@ type Proc struct {
 type Streamline struct{
 	Name  string
 	procs *list.List
-	ctx   StreamContext
+	ctx   Context
 }
 
 

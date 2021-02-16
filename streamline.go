@@ -3,40 +3,29 @@ package streamline
 import (
 	"container/list"
 	"errors"
-	"go.uber.org/zap"
 )
-type ProcFunc func(ctx *StreamMeta, data interface{}) error
+type ProcFunc func(ctx *StreamContext, data interface{}) error
 
 type Proc struct {
 	F ProcFunc
 	Name string
 }
 
-type StreamMeta struct {
-	Logger *zap.SugaredLogger
-}
-
 type Streamline struct{
-	Name string
+	Name  string
 	procs *list.List
-	ctx   StreamMeta
+	ctx   StreamContext
 }
 
-func New(meta StreamMeta) *Streamline {
-	return &Streamline{
-		procs: list.New(),
-		ctx:   meta,
-	}
-}
 
-func (s *Streamline) AddProc(procName string, f ProcFunc) {
+func (s *Streamline) Add(procName string, f ProcFunc) {
 	s.procs.PushBack(Proc{
 		F:    f,
 		Name: procName,
 	})
 }
 
-func (s *Streamline) InsertProc(target string, procName string, f ProcFunc, insertBefore bool) error {
+func (s *Streamline) Insert(target string, procName string, f ProcFunc, insertBefore bool) error {
 	for e:=s.procs.Front();e!=nil;e=e.Next() {
 		if e.Value.(Proc).Name == target {
 			if insertBefore == true {
@@ -54,15 +43,6 @@ func (s *Streamline) InsertProc(target string, procName string, f ProcFunc, inse
 		}
 	}
 	return errors.New("target process not found")
-}
-
-// TODO: Add Pre-process or post-process to all procs.
-// Note: I don't know if this is useful
-func (s *Streamline) AddGlobalPreProc() {
-
-}
-func (s *Streamline) AddGlobalPostProc() {
-
 }
 
 func (s *Streamline) Run(dataModel interface{}) error {

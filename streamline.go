@@ -15,8 +15,12 @@ type Streamline struct{
 	Name  string
 	procs *list.List
 	ctx   Context
+	Tags  []string
 }
 
+func (s *Streamline) AddTag(tag string) {
+	s.Tags = append(s.Tags, tag)
+}
 
 func (s *Streamline) Add(procName string, f ProcFunc) {
 	s.procs.PushBack(Proc{

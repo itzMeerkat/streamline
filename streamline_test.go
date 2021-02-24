@@ -1,8 +1,6 @@
 package streamline
 
 import (
-	"fmt"
-	"go.uber.org/zap"
 	"testing"
 )
 
@@ -46,13 +44,14 @@ func Mult(ctx *Context, data interface{}) error {
 }
 
 func TestBasic(t *testing.T) {
-	l,_:=zap.NewProduction()
-	s := New(Context{Logger: l.Sugar()})
-	//dm := MyData{Counter: 2}
-	wd := WrongData{Nocounter: 222}
-	//s.AddProc("1", Inc)
-	//s.AddProc("mult", Mult)
+	//l,_:=zap.NewProduction()
+	f := New()
+	s := f.NewStreamline("a", Context{
+		Logger:   nil,
+		Action:   "act",
+		Resource: "res",
+	})
+
 	s.Add("interface", Reset)
-	s.Run(&wd)
-	fmt.Println(wd.Nocounter)
+	//fmt.Println(wd.Nocounter)
 }

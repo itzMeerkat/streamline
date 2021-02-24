@@ -6,18 +6,25 @@ import (
 )
 
 type Factory struct {
-	streamlines []*Streamline
+	streamlines map[string]*Streamline
 }
 
-func (f *Factory) New(meta Context) *Streamline {
+func New() *Factory {
+	return &Factory{streamlines: make(map[string]*Streamline)}
+}
+
+func (f *Factory) NewStreamline(name string, meta Context) *Streamline {
 	sl := &Streamline{
 		procs: list.New(),
 		ctx:   meta,
 	}
 
-	f.streamlines = append(f.streamlines, sl)
-
+	f.streamlines[name] = sl
 	return sl
+}
+
+func (f *Factory) Get(name string) *Streamline {
+	return f.streamlines[name]
 }
 
 func (f *Factory) Plot() string {

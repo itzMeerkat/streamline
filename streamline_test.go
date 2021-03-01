@@ -1,6 +1,9 @@
 package streamline
 
 import (
+	"context"
+	"fmt"
+	"gitee.com/fat_marmota/infra/log"
 	"testing"
 )
 
@@ -26,32 +29,39 @@ type CommonInterface interface {
 	Retract() error
 }
 
-func Reset(ctx *Context, data interface{}) error {
-	d := data.(CommonInterface)
+func Reset(c *ConveyorBelt) error {
+	d := c.DataPanel.(CommonInterface)
 	return d.Retract()
 }
 
-func Inc(ctx *Context, data interface{}) error {
-	d := data.(*MyData)
+func Inc(c *ConveyorBelt) error {
+	d := c.DataPanel.(*MyData)
 	d.Counter += 1
 	return nil
 }
 
-func Mult(ctx *Context, data interface{}) error {
-	d := data.(*MyData)
+func Mult(c *ConveyorBelt) error {
+	d := c.DataPanel.(*MyData)
 	d.Counter *= 2
 	return nil
 }
 
+func Print(c *ConveyorBelt) error {
+	d := c.DataPanel.(*MyData)
+	fmt.Println(d.Counter)
+	return nil
+}
+
 func TestBasic(t *testing.T) {
-	//l,_:=zap.NewProduction()
+	log.InitZapSugared(true, false)
 	f := New()
-	s := f.NewStreamline("a", Context{
-		Logger:   nil,
-		Action:   "act",
-		Resource: "res",
-	})
+	s := f.NewStreamline("a","b","c")
 
 	s.Add("interface", Reset)
+	s.Add("add",Inc)
+	s.Add("add",Inc)
+	s.Add("p", Print)
+	c := NewConveyorBelt(s, context.Background(), &MyData{})
+	c.Run()
 	//fmt.Println(wd.Nocounter)
 }

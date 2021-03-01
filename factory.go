@@ -2,7 +2,6 @@ package streamline
 
 import (
 	"container/list"
-	"gitee.com/fat_marmota/infra/log"
 	"strings"
 )
 
@@ -14,12 +13,11 @@ func New() *Factory {
 	return &Factory{streamlines: make(map[string]*Streamline)}
 }
 
-func (f *Factory) NewStreamline(name, action, resource string, logger log.Logger) *Streamline {
+func (f *Factory) NewStreamline(name, action, resource string) *Streamline {
 	sl := &Streamline{
 		procs: list.New(),
 		Action: action,
 		Resource: resource,
-		Logger: logger,
 	}
 
 	f.streamlines[name] = sl

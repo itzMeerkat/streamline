@@ -3,9 +3,8 @@ package streamline
 import (
 	"container/list"
 	"errors"
-	"gitee.com/fat_marmota/infra/log"
 )
-type ProcFunc func(*Streamline, interface{}, interface{}) error
+type ProcFunc func(*ConveyorBelt) error
 
 type Proc struct {
 	F ProcFunc
@@ -16,7 +15,6 @@ type Streamline struct{
 	Name  string
 	procs *list.List
 	Tags []string
-	Logger log.Logger
 	// These are for RBAC authentication
 	// If any of them is nil, it means no authentication is enabled
 	Action string
@@ -51,19 +49,6 @@ func (s *Streamline) Insert(target string, procName string, f ProcFunc, insertBe
 		}
 	}
 	return errors.New("target process not found")
-}
-
-func (s *Streamline) Run(in interface{}, out interface{}) error {
-	for e:=s.procs.Front();e!=nil;e=e.Next() {
-		v := e.Value.(Proc)
-		s.Logger.Infof("Running process %v", v.Name)
-		err := v.F(s, in, out)
-		if err != nil {
-			s.Logger.Errorf("Error when running %v", v.Name)
-			return err
-		}
-	}
-	return nil
 }
 
 func (s *Streamline) Describe() []string {

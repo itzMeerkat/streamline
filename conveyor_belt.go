@@ -2,7 +2,10 @@ package streamline
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"gitee.com/fat_marmota/infra/log"
+	"net/http"
 )
 
 type ConveyorBelt struct {
@@ -21,15 +24,15 @@ func NewConveyorBelt(s *Streamline, c context.Context, dataDomainRef interface{}
 	}
 }
 
-func (c *ConveyorBelt) Run() error {
+func (c *ConveyorBelt) Run() (int, error) {
+	var code int
 	for e:=c.S.procs.Front();e!=nil;e=e.Next() {
 		v := e.Value.(Proc)
-		c.Logger.Infof("Running process %v", v.Name)
-		err := v.F(c)
-		if err != nil {
-			c.Logger.Errorf("Error when running %v", v.Name)
-			return err
+		c.Logger.Debugf("Running process %v", v.Name)
+		code = v.F(c)
+		if code != http.StatusOK {
+			return code, errors.New(fmt.Sprintf("Error when running %v", v.Name))
 		}
 	}
-	return nil
+	return code, nil
 }

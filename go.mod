@@ -3,7 +3,7 @@ module gitee.com/fat_marmota/streamline
 go 1.15
 
 require (
-	gitee.com/fat_marmota/infra/log v0.0.0-20210224080616-e18c97687651
+	gitee.com/fat_marmota/infra/log v0.0.0
 	go.uber.org/zap v1.16.0
 )
 

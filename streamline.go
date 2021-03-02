@@ -4,7 +4,7 @@ import (
 	"container/list"
 	"errors"
 )
-type ProcFunc func(*ConveyorBelt) error
+type ProcFunc func(*ConveyorBelt) int
 
 type Proc struct {
 	F ProcFunc

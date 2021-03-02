@@ -53,7 +53,7 @@ func Print(c *ConveyorBelt) error {
 }
 
 func TestBasic(t *testing.T) {
-	log.InitZapSugared(true, false)
+	log.InitZapSugared(true, false, 1)
 	f := New()
 	s := f.NewStreamline("a","b","c")
 

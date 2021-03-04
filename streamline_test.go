@@ -16,40 +16,40 @@ type WrongData struct {
 	Nocounter int
 }
 
-func (d *MyData)Retract() error {
+func (d *MyData)Retract() int {
 	d.Counter = 0
-	return nil
+	return 200
 }
-func (d *WrongData)Retract() error {
+func (d *WrongData)Retract() int {
 	d.Nocounter = 10
-	return nil
+	return 200
 }
 
 type CommonInterface interface {
-	Retract() error
+	Retract() int
 }
 
-func Reset(c *ConveyorBelt) error {
+func Reset(c *ConveyorBelt) int {
 	d := c.DataPanel.(CommonInterface)
 	return d.Retract()
 }
 
-func Inc(c *ConveyorBelt) error {
+func Inc(c *ConveyorBelt) int {
 	d := c.DataPanel.(*MyData)
 	d.Counter += 1
-	return nil
+	return 200
 }
 
-func Mult(c *ConveyorBelt) error {
+func Mult(c *ConveyorBelt) int {
 	d := c.DataPanel.(*MyData)
 	d.Counter *= 2
-	return nil
+	return 200
 }
 
-func Print(c *ConveyorBelt) error {
+func Print(c *ConveyorBelt) int {
 	d := c.DataPanel.(*MyData)
 	fmt.Println(d.Counter)
-	return nil
+	return 200
 }
 
 func TestBasic(t *testing.T) {

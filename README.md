@@ -1,3 +1,4 @@
+## WARNING: This repo is currently under active developing, dependencies and itself will have breaking change frequently. If you are interested in this idea, please leave me a message!
 # Streamline
 ## Introduction
 This project aim to address a production issue: Collaboration is hard. It is hard to understand other's code. It is hard to debug a super long function especially it is not written by you. More importantly, even among a group of skilled programmer, mass collaboration is still not possible.

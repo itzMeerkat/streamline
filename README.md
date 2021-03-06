@@ -1,7 +1,12 @@
 ## WARNING: This repo is currently under active developing, dependencies and itself will have breaking change frequently. If you are interested in this idea, please leave me a message!
 # Streamline
+## Inspiration
+During my development, I found current way of building a web app is not agile enough, also not clear enough. Debugging is cumbersome, adding new feature to existing code base is a disaster. Therefore, inspired by AOP in Java Spring and analog of streamlines in factory, I made this package to address such problems.
+
 ## Introduction
-This project aim to address a production issue: Collaboration is hard. It is hard to understand other's code. It is hard to debug a super long function especially it is not written by you. More importantly, even among a group of skilled programmer, mass collaboration is still not possible.
+TLDR; This is a super flexible way to organize middlewares, and every single function is a middleware.
+
+This project aim to address a production issue: Collaboration is hard. It is hard to understand other's code. It is hard to debug a super long function especially it is not written by you. More importantly, even among a group of skilled programmers, mass collaboration is still not possible since the parallelism is not big enough. In another word, there not that much work can process at the same time.
 
 In this project I introduced a novel approach(not really) building a service. To demonstrate in a trivial way, I used an analog of factory and streamline.
 

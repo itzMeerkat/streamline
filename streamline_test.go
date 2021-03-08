@@ -30,24 +30,24 @@ type CommonInterface interface {
 }
 
 func Reset(c *ConveyorBelt) int {
-	d := c.DataPanel.(CommonInterface)
+	d := c.DataDomain.(CommonInterface)
 	return d.Retract()
 }
 
 func Inc(c *ConveyorBelt) int {
-	d := c.DataPanel.(*MyData)
+	d := c.DataDomain.(*MyData)
 	d.Counter += 1
 	return 200
 }
 
 func Mult(c *ConveyorBelt) int {
-	d := c.DataPanel.(*MyData)
+	d := c.DataDomain.(*MyData)
 	d.Counter *= 2
 	return 200
 }
 
 func Print(c *ConveyorBelt) int {
-	d := c.DataPanel.(*MyData)
+	d := c.DataDomain.(*MyData)
 	fmt.Println(d.Counter)
 	return 200
 }

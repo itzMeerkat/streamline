@@ -9,18 +9,18 @@ import (
 )
 
 type ConveyorBelt struct {
-	DataPanel interface{}
-	S *Streamline
-	Ctx context.Context
-	Logger log.Logger
+	DataDomain interface{}
+	S          *Streamline
+	Ctx        context.Context
+	Logger     log.Logger
 }
 
 func NewConveyorBelt(s *Streamline, c context.Context, dataDomainRef interface{}) *ConveyorBelt {
 	return &ConveyorBelt{
-		DataPanel: dataDomainRef,
-		S:         s,
-		Ctx:       c,
-		Logger:    log.GlobalLogger,
+		DataDomain: dataDomainRef,
+		S:          s,
+		Ctx:        c,
+		Logger:     log.GlobalLogger,
 	}
 }
 
